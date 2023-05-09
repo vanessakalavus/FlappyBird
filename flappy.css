@@ -12,7 +12,7 @@ body {
 .background {
 	height: 100vh;
 	width: 100vw;
-	background-image: url("background.jpeg");
+	background-color: skyblue;
 }
 
 .bird {
@@ -30,7 +30,7 @@ body {
 	left: 100vw;
 	height: 70vh;
 	width: 6vw;
-	background-color: green;
+	background-color: whitesmoke;
 }
 
 .message {
