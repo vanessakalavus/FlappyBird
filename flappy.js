@@ -1,17 +1,17 @@
-// Background scrolling speed
+// Tagatausta liikumiskiirus
 let move_speed = 8;
 	
-// Gravity constant value
+// gravitatsioon
 let gravity = 0.5;
 	
-// Getting reference to the bird element
-let bird = document.querySelector('.bird');
+// lennuelement
+let plane = document.querySelector('.plane');
 	
-// Getting bird element properties
-let bird_props = bird.getBoundingClientRect();
+// Lennukielemendi omaduste saamine 
+let plane_props = plane.getBoundingClientRect();
 let background = document.querySelector('.background').getBoundingClientRect();
 	
-// Getting reference to the score element
+// score-ile viide
 let score_val = document.querySelector('.score_val');
 let message = document.querySelector('.message');
 let score_title = document.querySelector('.score_title');
@@ -29,7 +29,7 @@ if (e.key == ' ' &&
 			.forEach((e) => {
 	e.remove();
 	});
-	bird.style.top = '40vh';
+	plane.style.top = '40vh';
 	game_state = 'Play';
 	message.innerHTML = '';
 	score_title.innerHTML = 'Score : ';
@@ -48,7 +48,7 @@ function play() {
         pipe_sprite.forEach((element) => {
             
         let pipe_sprite_props = element.getBoundingClientRect();
-        bird_props = bird.getBoundingClientRect();
+        plane_props = plane.getBoundingClientRect();
             
         // Delete the pipes if they have moved out
         // of the screen hence saving memory
@@ -57,14 +57,14 @@ function play() {
         } else {
             // Collision detection with bird and pipes
             if (
-            bird_props.left < pipe_sprite_props.left +
+            plane_props.left < pipe_sprite_props.left +
             pipe_sprite_props.width &&
-            bird_props.left +
-            bird_props.width > pipe_sprite_props.left &&
-            bird_props.top < pipe_sprite_props.top +
+            plane_props.left +
+            plane_props.width > pipe_sprite_props.left &&
+            plane_props.top < pipe_sprite_props.top +
             pipe_sprite_props.height &&
-            bird_props.top +
-            bird_props.height > pipe_sprite_props.top
+            plane_props.top +
+            plane_props.height > pipe_sprite_props.top
             ) {
                 
             // Change game state and end the game
@@ -78,9 +78,9 @@ function play() {
             // has the successfully dodged the
 
             if (
-                pipe_sprite_props.right < bird_props.left &&
+                pipe_sprite_props.right < plane_props.left &&
                 pipe_sprite_props.right +
-                move_speed >= bird_props.left &&
+                move_speed >= plane_props.left &&
                 element.increase_score == '1'
             ) {
                 score_val.innerHTML = +score_val.innerHTML + 1;
@@ -95,28 +95,28 @@ function play() {
     }
     requestAnimationFrame(move);
 
-    let bird_dy = 0;
+    let plane_dy = 0;
     function apply_gravity() {
         if (game_state != 'Play') return;
-        bird_dy = bird_dy + gravity;
+        plane_dy = plane_dy + gravity;
         document.addEventListener('keydown', (e) => {
         if (e.key == 'ArrowUp' || e.key == ' ') {
-            bird_dy = -7.6;
+            plane_dy = -7.6;
         }
         });
 
         // Collision detection with bird and
         // window top and bottom
 
-        if (bird_props.top <= 0 ||
-            bird_props.bottom >= background.bottom) {
+        if (plane_props.top <= 0 ||
+            plane_props.bottom >= background.bottom) {
         game_state = 'End';
         message.innerHTML = 'Press Space To Restart';
         message.style.left = '28vw';
         return;
         }
-        bird.style.top = bird_props.top + bird_dy + 'px';
-        bird_props = bird.getBoundingClientRect();
+        plane.style.top = plane_props.top + plane_dy + 'px';
+        plane_props = plane.getBoundingClientRect();
         requestAnimationFrame(apply_gravity);
     }
     requestAnimationFrame(apply_gravity);
